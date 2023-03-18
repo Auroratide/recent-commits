@@ -1,0 +1,36 @@
+name: 'Recent Commits'
+description: 'List of commits made since last push'
+inputs:
+  github-token:
+    description: 'GitHub token'
+    required: true
+  main-branch:
+    description: 'Main branch to compare against'
+    required: false
+    default: 'main'
+  last-push-branch:
+    description: 'Branch pointing to the last commit made to the main branch'
+    required: false
+    default: 'last-push-to-main'
+outputs:
+  message:
+    description: 'Aggregated message that can be sent to a message channel'
+runs:
+  using: 'composite'
+  steps:
+    - id: create-message
+      name: 'Create message'
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+      run: |
+        echo "message<<EOF" >> $GITHUB_OUTPUT
+        echo "$(./recent-comments.sh "${{ github.server_url}}/${{ github.repository}}" ${{ inputs.last-push-branch }} ${{ inputs.main-branch }})" >> $GITHUB_OUTPUT
+        echo "EOF" >> $GITHUB_OUTPUT
+      shell: bash
+
+    - id: update-last-push-branch
+      name: 'Update last-push-branch'
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+      run: advanced-last-push.sh ${{ inputs.last-push-branch }} ${{ inputs.main-branch }}
+      shell: bash

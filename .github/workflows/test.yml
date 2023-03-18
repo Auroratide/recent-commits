@@ -22,3 +22,27 @@ jobs:
       - name: Script tests
         run: test/test.sh
         shell: bash
+
+  action:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup git
+        run: |
+          git config --global user.name 'github_actions'
+          git config --global user.email 'github_actions@users.noreply.github.com'
+      
+      - name: Run action
+        uses: ./
+        id: recent-commits
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          main-branch: main
+          last-push-branch: last-push-to-main
+
+      - name: Print output
+        run: echo "${{ steps.recent-commits.outputs.message }}"
+        shell: bash
