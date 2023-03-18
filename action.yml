@@ -26,7 +26,7 @@ runs:
         git fetch origin ${{ inputs.main-branch }}
         git fetch origin ${{ inputs.last-push-branch }}
         echo "message<<EOF" >> $GITHUB_OUTPUT
-        echo "$(${{ github.action_path }}/recent-commits.sh ${{ github.server_url}}/${{ github.repository}} ${{ inputs.last-push-branch }} ${{ inputs.main-branch }})" >> $GITHUB_OUTPUT
+        echo "$(${{ github.action_path }}/recent-commits.sh ${{ github.server_url}}/${{ github.repository}} origin/${{ inputs.last-push-branch }} origin/${{ inputs.main-branch }})" >> $GITHUB_OUTPUT
         echo "EOF" >> $GITHUB_OUTPUT
       shell: bash
 
