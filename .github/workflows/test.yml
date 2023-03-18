@@ -14,6 +14,11 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Setup git
+        run: |
+          git config --global user.name 'github_actions'
+          git config --global user.email 'github_actions@users.noreply.github.com'
+
       - name: Script tests
         run: test/test.sh
         shell: bash
