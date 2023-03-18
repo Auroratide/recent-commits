@@ -24,7 +24,7 @@ runs:
         GITHUB_TOKEN: ${{ inputs.github-token }}
       run: |
         echo "message<<EOF" >> $GITHUB_OUTPUT
-        echo "$(recent-comments.sh "${{ github.server_url}}/${{ github.repository}}" ${{ inputs.last-push-branch }} ${{ inputs.main-branch }})" >> $GITHUB_OUTPUT
+        echo "$(recent-commits.sh ${{ github.server_url}}/${{ github.repository}} ${{ inputs.last-push-branch }} ${{ inputs.main-branch }})" >> $GITHUB_OUTPUT
         echo "EOF" >> $GITHUB_OUTPUT
       shell: bash
 
