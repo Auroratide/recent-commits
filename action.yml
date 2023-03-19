@@ -50,9 +50,11 @@ runs:
       name: 'Create message'
       env:
         GITHUB_TOKEN: ${{ inputs.github-token }}
+        COMMITS_OUTPUT: ${{ steps.get-commits.outputs.commits }}
+        AUTHOR_OUTPUT: ${{ steps.get-author.outputs.author-notify-id }}
       run: |
         echo "message<<EOF" >> $GITHUB_OUTPUT
-        echo "$(${{ github.action_path }}/create-message.sh ${{ github.server_url}} ${{ github.repository}} ${{ steps.get-commits.outputs.commits }} \"${{ steps.get-author.outputs.author-notify-id }}\" ${{ github.actor }})" >> $GITHUB_OUTPUT
+        echo "$(${{ github.action_path }}/create-message.sh ${{ github.server_url}} ${{ github.repository}} "$COMMITS_OUTPUT" "$AUTHOR_OUTPUT" ${{ github.actor }})" >> $GITHUB_OUTPUT
         echo "EOF" >> $GITHUB_OUTPUT
       shell: bash
 
