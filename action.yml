@@ -52,7 +52,7 @@ runs:
         GITHUB_TOKEN: ${{ inputs.github-token }}
       run: |
         echo "message<<EOF" >> $GITHUB_OUTPUT
-        echo "$(${{ github.action_path }}/create-message.sh ${{ github.server_url}} ${{ github.repository}} ${{ steps.get-commits.outputs.commits }} \"${{ steps.get-author.outputs.author-notify-id }}\" ${{ github.actor }})" >> $GITHUB_OUTPUT
+        echo "$(${{ github.action_path }}/create-message.sh \"${{ github.server_url}}\" \"${{ github.repository}}\" \"${{ steps.get-commits.outputs.commits }}\" \"${{ steps.get-author.outputs.author-notify-id }}\" \"${{ github.actor }}\")" >> $GITHUB_OUTPUT
         echo "EOF" >> $GITHUB_OUTPUT
       shell: bash
 
