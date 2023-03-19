@@ -12,10 +12,16 @@ inputs:
     description: 'Branch pointing to the last commit made to the main branch'
     required: false
     default: 'last-push-to-main'
+  author-file:
+    description: 'File containing list of possible authors to notify'
+    required: false
 outputs:
   commits:
     description: 'List of commits made since last push'
     value: ${{ steps.get-commits.outputs.commits }}
+  author-notify-id:
+    description: 'Author of the pushed commits'
+    value: ${{ steps.get-author.outputs.author-notify-id }}
   message:
     description: 'Aggregated message that can be sent to a message channel'
     value: ${{ steps.create-message.outputs.message }}
@@ -34,13 +40,19 @@ runs:
         echo "EOF" >> $GITHUB_OUTPUT
       shell: bash
 
+    - id: get-author
+      name: 'Get author'
+      if: "${{ inputs.author-file != '' }}"
+      run: echo "author-notify-id=$(${{ github.action_path }}/author.sh .github/${{ inputs.author-file }} ${{ github.actor }})" >> $GITHUB_OUTPUT
+      shell: bash
+
     - id: create-message
       name: 'Create message'
       env:
         GITHUB_TOKEN: ${{ inputs.github-token }}
       run: |
         echo "message<<EOF" >> $GITHUB_OUTPUT
-        echo "$(${{ github.action_path }}/create-message.sh ${{ github.server_url}} ${{ github.repository}} ${{ steps.get-commits.outputs.commits }})" >> $GITHUB_OUTPUT
+        echo "$(${{ github.action_path }}/create-message.sh ${{ github.server_url}} ${{ github.repository}} ${{ steps.get-commits.outputs.commits }} \"${{ steps.get-author.outputs.author-notify-id }}\" ${{ github.actor }})" >> $GITHUB_OUTPUT
         echo "EOF" >> $GITHUB_OUTPUT
       shell: bash
 

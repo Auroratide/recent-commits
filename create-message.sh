@@ -5,6 +5,8 @@ set -euo pipefail
 BASE_URL=$1
 REPO=$2
 COMMITS=$3
+AUTHOR_NOTIFY_ID=$4
+GITHUB_ACTOR=$5
 
 echo "New commits to $REPO:"
 while read -r commit; do
@@ -12,3 +14,11 @@ while read -r commit; do
 	message=$(echo "$commit" | cut -d' ' -f2-)
 	echo "  <$BASE_URL/$REPO/commit/$hash|Link to commit>: $message"
 done <<< "$COMMITS"
+
+if [ -z "$AUTHOR_NOTIFY_ID" ]; then
+   AUTHOR=$GITHUB_ACTOR
+else
+   AUTHOR="<@$AUTHOR_NOTIFY_ID>"
+fi
+
+echo "  Author: $AUTHOR"

@@ -46,6 +46,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           main-branch: main
           last-push-branch: last-push-to-main
+          author-file: authors.json
 
       - name: Print output
         run: echo "${{ steps.recent-commits.outputs.message }}"
