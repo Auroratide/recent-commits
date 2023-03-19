@@ -21,6 +21,7 @@ function run {
    fi
 }
 
+run "author.sh" "./test/author.sh"
 run "create-message.sh" "./test/create-message.sh"
 run "recent-commits.sh" "./test/recent-commits.sh"
 run "advance-last-push.sh" "./test/advance-last-push.sh"
