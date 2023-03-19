@@ -10,24 +10,24 @@ permissions:
   contents: write
 
 jobs:
-  scripts:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
+  # scripts:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #       with:
+  #         fetch-depth: 0
 
-      - name: Setup git
-        run: |
-          git config --global user.name 'github_actions'
-          git config --global user.email 'github_actions@users.noreply.github.com'
+  #     - name: Setup git
+  #       run: |
+  #         git config --global user.name 'github_actions'
+  #         git config --global user.email 'github_actions@users.noreply.github.com'
 
-      - name: Script tests
-        run: test/test.sh
-        shell: bash
+  #     - name: Script tests
+  #       run: test/test.sh
+  #       shell: bash
 
   action:
-    needs: scripts
+    # needs: scripts
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

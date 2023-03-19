@@ -31,9 +31,9 @@ runs:
         echo "EOF" >> $GITHUB_OUTPUT
       shell: bash
 
-    - id: update-last-push-branch
-      name: 'Update last-push-branch'
-      env:
-        GITHUB_TOKEN: ${{ inputs.github-token }}
-      run: ${{ github.action_path }}/advance-last-push.sh ${{ inputs.last-push-branch }} ${{ inputs.main-branch }}
-      shell: bash
+    # - id: update-last-push-branch
+    #   name: 'Update last-push-branch'
+    #   env:
+    #     GITHUB_TOKEN: ${{ inputs.github-token }}
+    #   run: ${{ github.action_path }}/advance-last-push.sh ${{ inputs.last-push-branch }} ${{ inputs.main-branch }}
+    #   shell: bash
