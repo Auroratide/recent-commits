@@ -13,21 +13,34 @@ inputs:
     required: false
     default: 'last-push-to-main'
 outputs:
+  commits:
+    description: 'List of commits made since last push'
+    value: ${{ steps.get-commits.outputs.commits }}
   message:
     description: 'Aggregated message that can be sent to a message channel'
     value: ${{ steps.create-message.outputs.message }}
 runs:
   using: 'composite'
   steps:
-    - id: create-message
-      name: 'Create message'
+    - id: get-commits
+      name: 'Get commits'
       env:
         GITHUB_TOKEN: ${{ inputs.github-token }}
       run: |
         git fetch origin ${{ inputs.main-branch }}
         git fetch origin ${{ inputs.last-push-branch }}
+        echo "commits<<EOF" >> $GITHUB_OUTPUT
+        echo "$(${{ github.action_path }}/recent-commits.sh origin/${{ inputs.last-push-branch }} origin/${{ inputs.main-branch }})" >> $GITHUB_OUTPUT
+        echo "EOF" >> $GITHUB_OUTPUT
+      shell: bash
+
+    - id: create-message
+      name: 'Create message'
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+      run: |
         echo "message<<EOF" >> $GITHUB_OUTPUT
-        echo "$(${{ github.action_path }}/recent-commits.sh ${{ github.server_url}}/${{ github.repository}} origin/${{ inputs.last-push-branch }} origin/${{ inputs.main-branch }})" >> $GITHUB_OUTPUT
+        echo "$(${{ github.action_path }}/create-message.sh ${{ github.server_url}} ${{ github.repository}} ${{ steps.get-commits.outputs.commits }})" >> $GITHUB_OUTPUT
         echo "EOF" >> $GITHUB_OUTPUT
       shell: bash
 

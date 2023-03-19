@@ -20,14 +20,14 @@ git commit -m "Add to test file" --quiet
 HASH_2=$(git rev-parse HEAD)
 git checkout main --quiet
 
-blue "Run recent commits script"
-RESULT=$(./recent-commits.sh BASE-URL last-push-to-test test-head)
+blue "Run script"
+RESULT=$(./recent-commits.sh last-push-to-test test-head)
 
-blue "Verifying result matches expectation"
+blue "Verifying result"
 RESULT_LINE_1=$(echo "$RESULT" | head -1 | tail -1)
 RESULT_LINE_2=$(echo "$RESULT" | head -2 | tail -1)
 
-assert_eq "  <BASE-URL/commit/$HASH_2|Link to commit>: Add to test file" "$RESULT_LINE_1" "First commit line did not match"
-assert_eq "  <BASE-URL/commit/$HASH_1|Link to commit>: Create test file" "$RESULT_LINE_2" "Second commit line did not match"
+assert_eq "$HASH_2 Add to test file" "$RESULT_LINE_1" "First line did not match"
+assert_eq "$HASH_1 Create test file" "$RESULT_LINE_2" "Second line did not match"
 
 green "Passed!"
