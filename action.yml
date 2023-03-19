@@ -26,9 +26,7 @@ runs:
         git fetch origin ${{ inputs.main-branch }}
         git fetch origin ${{ inputs.last-push-branch }}
         echo "$(${{ github.action_path }}/recent-commits.sh ${{ github.server_url}}/${{ github.repository}} origin/${{ inputs.last-push-branch }} origin/${{ inputs.main-branch }})"
-        echo "message<<EOF" >> $GITHUB_OUTPUT
-        echo "$(${{ github.action_path }}/recent-commits.sh ${{ github.server_url}}/${{ github.repository}} origin/${{ inputs.last-push-branch }} origin/${{ inputs.main-branch }})" >> $GITHUB_OUTPUT
-        echo "EOF" >> $GITHUB_OUTPUT
+        echo "::set-output name=message::$( ${{ github.action_path }}/recent-commits.sh ${{ github.server_url}}/${{ github.repository}} origin/${{ inputs.last-push-branch }} origin/${{ inputs.main-branch }} )"
       shell: bash
 
     # - id: update-last-push-branch
