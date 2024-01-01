@@ -41,7 +41,7 @@ runs:
         GITHUB_TOKEN: ${{ inputs.github-token }}
       run: |
         echo "commits<<EOF" >> $GITHUB_OUTPUT
-        echo "$(${{ github.action_path }}/recent-commits.sh origin/${{ inputs.last-push-branch }} origin/${{ inputs.main-branch }})" >> $GITHUB_OUTPUT
+        echo "$(${{ github.action_path }}/recent-commits.sh ${{ inputs.last-push-branch }} ${{ inputs.main-branch }})" >> $GITHUB_OUTPUT
         echo "EOF" >> $GITHUB_OUTPUT
       shell: bash
 
@@ -63,9 +63,9 @@ runs:
         echo "EOF" >> $GITHUB_OUTPUT
       shell: bash
 
-    - id: update-last-push-branch
-      name: 'Update last-push-branch'
-      env:
-        GITHUB_TOKEN: ${{ inputs.github-token }}
-      run: ${{ github.action_path }}/advance-last-push.sh ${{ inputs.last-push-branch }} ${{ inputs.main-branch }}
-      shell: bash
+    # - id: update-last-push-branch
+    #   name: 'Update last-push-branch'
+    #   env:
+    #     GITHUB_TOKEN: ${{ inputs.github-token }}
+    #   run: ${{ github.action_path }}/advance-last-push.sh ${{ inputs.last-push-branch }} ${{ inputs.main-branch }}
+    #   shell: bash

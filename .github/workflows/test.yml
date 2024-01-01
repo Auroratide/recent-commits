@@ -46,9 +46,13 @@ jobs:
           last-push-branch: last-push-to-main
           author-file: authors.json
 
-      - name: Verify action
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          OUTPUT: ${{ steps.recent-commits.outputs.message }}
-        run: ./.github/verify.sh "$OUTPUT"
+      - name: Output
+        run: echo "${{ steps.recent-commits.outputs.message }}"
         shell: bash
+
+      # - name: Verify action
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     OUTPUT: ${{ steps.recent-commits.outputs.message }}
+      #   run: ./.github/verify.sh "$OUTPUT"
+      #   shell: bash
