@@ -48,10 +48,9 @@ jobs:
           last-push-branch: last-push-to-main
           author-file: authors.json
 
-      - name: Print commits
-        run: echo "${{ steps.recent-commits.outputs.commits }}"
-        shell: bash
-
-      - name: Print output
-        run: echo "${{ steps.recent-commits.outputs.message }}"
+      - name: Verify action
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OUTPUT: ${{ steps.recent-commits.outputs.message }}
+        run: ./.github/verify.sh "$OUTPUT"
         shell: bash
