@@ -8,6 +8,10 @@ COMMITS=$3
 AUTHOR_NOTIFY_ID=$4
 GITHUB_ACTOR=$5
 
+if [ -z "$COMMITS" ]; then
+	exit 0
+fi
+
 echo "New commits to $REPO:"
 while read -r commit; do
 	hash=$(echo "$commit" | cut -d' ' -f1)

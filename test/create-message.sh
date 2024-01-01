@@ -28,6 +28,7 @@ assert_eq "  <BASE-URL/REPO/commit/abc123|Link to commit>: Commit One" "$RESULT_
 assert_eq "  <BASE-URL/REPO/commit/bcd234|Link to commit>: Commit Two" "$RESULT_LINE_3" "Commit line (2) did not match"
 assert_eq "  Author: <@133742>" "$RESULT_LINE_4" "Author line did not match"
 
+
 blue "Run script: Notify Id NOT set"
 RESULT=$(./create-message.sh "$BASE_URL" "$REPO" "$COMMITS" "" "$GITHUB_ACTOR")
 
@@ -35,5 +36,12 @@ blue "Verifying result"
 RESULT_LINE_4=$(echo "$RESULT" | head -4 | tail -1)
 
 assert_eq "  Author: Auroratide" "$RESULT_LINE_4" "Author line did not match"
+
+
+blue "Run script: No new commits"
+RESULT=$(./create-message.sh "$BASE_URL" "$REPO" "" "" "$GITHUB_ACTOR")
+
+blue "Verifying result"
+assert_eq "" "$RESULT" "Message was not empty"
 
 green "Passed!"
