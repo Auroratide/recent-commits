@@ -35,6 +35,13 @@ runs:
         token: ${{ inputs.github-token }}
         fetch-depth: 0
 
+    - id: ensure-branch-exists
+      name: 'Ensure last-push-branch exists'
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+      run: ${{ github.action_path }}/ensure-branch-exists.sh ${{ inputs.last-push-branch }}
+      shell: bash
+
     - id: get-commits
       name: 'Get commits'
       env:
