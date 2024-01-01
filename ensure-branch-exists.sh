@@ -3,7 +3,7 @@
 BRANCH=$1
 DRY_RUN=${2:-false}
 
-git rev-parse --verify --quiet $BRANCH
+git rev-parse --verify --quiet origin/$BRANCH
 RESULT=$?
 
 set -euo pipefail
