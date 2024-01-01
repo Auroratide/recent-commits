@@ -1,5 +1,8 @@
 name: 'Recent Commits'
 description: 'List of commits made since last push'
+branding:
+  icon: 'git-commit'
+  color: 'blue'
 inputs:
   github-token:
     description: 'GitHub token'
