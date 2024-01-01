@@ -14,6 +14,7 @@ New commits to Auroratide/recent-commits:
 ```
 
 * [Usage](#usage)
+  * [Outputs](#outputs)
   * [Author JSON File](#author-json-file)
 * [Why?](#why)
 * [License](#license)
@@ -36,6 +37,24 @@ with:
 | main-branch | `main` | Your main branch, or perhaps the branch on which you want code reviews to occur. |
 | last-push-branch | `last-push-to-main` | Name of an automatically facilitated branch which will point to the last commit pushed to the main branch. |
 | author-file | **Optional** | Name of a file in your `.github` folder which stores notification ids of people on your team. E.g. `authors.json` |
+
+### Outputs
+
+| Output | Description |
+| ------ | ----------- |
+| message | Aggregated message that can be sent to a notification channel. |
+| commits | List of commits made since last push. |
+| author-notify-id | Author of the pushed commits. |
+
+Example usage with the [Slack Github Action](https://github.com/slackapi/slack-github-action):
+
+```yaml
+- name: Notify Slack of Success
+  uses: slackapi/slack-github-action@v1.16.0
+  with:
+    channel-id: my-team-commits
+    slack-message: ${{ steps.recent-commits.outputs.message }}
+```
 
 ### Author JSON File
 
