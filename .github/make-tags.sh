@@ -1,7 +1,7 @@
 #!/bin/bash
 
 TAG=$1
-MAJOR=$(echo $TAG | cut -d. -f1)
+MAJOR=$(echo $TAG | cut -d. -f1 | sed 's/^v//')
 MINOR=$(echo $TAG | cut -d. -f2)
 
 git tag -a "v$MAJOR" -m "v$MAJOR"
