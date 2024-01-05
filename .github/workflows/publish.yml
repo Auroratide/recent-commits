@@ -22,4 +22,4 @@ jobs:
       - name: Make Tags
         env:
           GITHUB_TOKEN: ${{ github.token }}
-        run: ./github/make-tags.sh
+        run: ./.github/make-tags.sh
